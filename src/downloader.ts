@@ -23,10 +23,10 @@ export const downloadEpisode = async (episode: IStream) => {
       .on('progress', (data) => logProgress(fileName, data.frames, data.currentFps, data.timemark))
       .on('error', reject)
       .on('end', resolve)
-      .save(`${fileName}.mp4`)
+      .save((process.env.SAVE_PATH ?? '.') + `/${fileName}.mp4`)
     });
   process.stdout.write(chalk.bold.strikethrough(fileName) + ': ' + chalk.bold.green(' DONE\r\n'));
-  
+
 };
 
 const logProgress = (name: string, frames: number, fps: number, timemark: string) => {
